@@ -1,0 +1,100 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+}
+
+.authors {
+    font-size: 1.8rem;
+    opacity: 0.9;
+}
+
+/* Sección de contenido */
+.content-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: #f9f9f9;
+}
+
+/* Contenedores */
+.graph-container {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Ajuste de altura para los recuadros con separación */
+.info-container {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px; /* Espacio entre los recuadros */
+}
+
+/* Gráficos y recuadros con mayor altura */
+.graph, .box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Aumentar la altura de los recuadros */
+.box {
+    height: 32%; /* Ajuste para que sean más grandes y con separación */
+}
+
+/* Estilos del buscador */
+.search-container {
+    margin-top: 20px;
+}
+
+#yearSearch {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Resultados */
+.result-container {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: white;
+    margin-top: 40px;
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web de Predicción Meteorológica</title>
+    <link rel="stylesheet" href="web.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Proyecto de Predicciones Meteorológicas</h1>
+            <p class="authors">Marc Manzorro, Victor Castelló, Adriano Calderon y Carlos Rodriguez</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="graph-container">
+            <div class="graph">
+                <h2>Temperaturas (2006-2100)</h2>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="graph">
+                <h2>Precipitaciones (2006-2100)</h2>
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="box">
+                <h2>Datos Clave</h2>
+                <p>Hemos usado datos de la AEMET </p>
+            </div>
+            <div class="box">
+                <h2>Impacto</h2>
+                <p>que ahcevFER  wdvwerbg ayudan en la gestión de recursos y prevención de desastres.</p>
+            </div>
+            <div class="box">
+                <h2>Buscador</h2>
+                <p>Aquí tenemos un buscador para cercar con más precision la media de Temperatura y Precipitaciones año por año:</p>
+
+
+                <div class="search-container">
+                    <input type="text" id="yearSearch" list="yearsList" placeholder="Buscar año...">
+                    <datalist id="yearsList">
+                        <script>
+                            for (let year = 2006; year <= 2100; year++) {
+                                document.write(`<option value="${year}">${year}</option>`);
+                            }
+                        </script>
+                    </datalist>
+                </div>
+                <div id="result" class="result-container"></div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 Proyecto de Predicciones Meteorológicas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const years = Array.from({ length: 95 }, (_, i) => 2006 + i);
+        const temperatures = years.map(year => 10 + 0.1 * (year - 2006) + Math.random() * 2);
+        const precipitations = years.map(year => 500 + 5 * (year - 2006) + Math.random() * 50);
+
+        // Gráfico de temperaturas
+        new Chart(document.getElementById('lineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Temperatura Media (°C)',
+                    data: temperatures,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: { title: { display: true, text: 'Temperatura (°C)' } },
+                    x: { title: { display: true, text: 'Año' } }
+                }
+            }
+        });
+
+        // Gráfico de precipitaciones
+        new Chart(document.getElementById('scatterChart').getContext('2d'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Precipitación Media (mm)',
+                    data: years.map((year, i) => ({ x: year, y: precipitations[i] })),
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { title: { display: true, text: 'Precipitación (mm)' } },
+                    x: { title: { display: true, text: 'Año' } }
+                }
+            }
+        });
+
+        document.getElementById('yearSearch').addEventListener('input', function () {
+            const selectedYear = parseInt(this.value);
+            if (!isNaN(selectedYear) && years.includes(selectedYear)) {
+                const index = years.indexOf(selectedYear);
+                const temp = temperatures[index].toFixed(2);
+                const precip = precipitations[index].toFixed(2);
+
+                document.getElementById('result').innerHTML = `
+                    <p><strong>Temperatura en ${selectedYear}:</strong> ${temp}°C</p>
+                    <p><strong>Precipitación en ${selectedYear}:</strong> ${precip} mm</p>
+                `;
+            } else {
+                document.getElementById('result').innerHTML = '';
+            }
+        });
+    </script>
+
+</body>
+</html>

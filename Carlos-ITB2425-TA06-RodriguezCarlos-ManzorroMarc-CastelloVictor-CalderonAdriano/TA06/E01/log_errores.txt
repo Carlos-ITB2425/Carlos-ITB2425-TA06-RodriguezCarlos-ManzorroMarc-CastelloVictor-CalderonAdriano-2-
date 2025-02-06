@@ -1,0 +1,8 @@
+Ejecución: 2025-01-30 08:20:13
+
+2025-01-30 08:20:13 - Error en precip.P1.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 1 no tiene suficientes campos.
+2025-01-30 08:20:13 - Error en precip.P1.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 2 no tiene suficientes campos.
+2025-01-30 08:20:13 - Error en precip.P4.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 1 no tiene suficientes campos.
+2025-01-30 08:20:13 - Error en precip.P4.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 2 no tiene suficientes campos.
+2025-01-30 08:20:13 - Error en precip.P3.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 1 no tiene suficientes campos.
+2025-01-30 08:20:13 - Error en precip.P3.MIROC5.RCP60.2006-2100.REGRESION.dat: Línea 2 no tiene suficientes campos.
