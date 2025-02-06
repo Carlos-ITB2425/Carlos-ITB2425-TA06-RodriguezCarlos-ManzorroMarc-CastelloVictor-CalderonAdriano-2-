@@ -2,13 +2,13 @@ import os
 import glob
 
 # Configuración
-ruta_archivos = './Prova'  # Cambia esto a la ruta de tus archivos
+ruta_actual = os.path.dirname(os.path.abspath(__file__))  # Obtiene la ruta del script actual
+ruta_archivos = os.path.join(ruta_actual, 'C:/./Prueba')  # Cambia 'Prueba' por el nombre de tu carpeta
 archivos = glob.glob(os.path.join(ruta_archivos, '*.txt'))  # Ajusta la extensión si es necesario
 
 # Variables para almacenar datos
 total_archivos = len(archivos)
 archivos_leidos = 0
-archivos_con_error = 0
 precipitaciones_por_anio = {}
 temperaturas_por_anio = {}
 errores = []
@@ -40,6 +40,8 @@ medias_temperaturas = {año: sum(datos) / len(datos) for año, datos in temperat
 
 año_mas_lluvioso = max(medias_precipitaciones, key=medias_precipitaciones.get)
 año_mas_seco = min(medias_precipitaciones, key=medias_precipitaciones.get)
+año_mas_calido = max(medias_temperaturas, key=medias_temperaturas.get)
+año_mas_frio = min(medias_temperaturas, key=medias_temperaturas.get)
 
 # Escribir Datos.log
 with open('Datos.log', 'w') as f:
@@ -56,6 +58,8 @@ with open('resultados.log', 'w') as f:
 
     f.write(f"\nAño más lluvioso: {año_mas_lluvioso}\n")
     f.write(f"Año más seco: {año_mas_seco}\n")
+    f.write(f"Año más cálido: {año_mas_calido}\n")
+    f.write(f"Año más frío: {año_mas_frio}\n")
 
 # Escribir errores.txt
 with open('errores.txt', 'w') as f:
