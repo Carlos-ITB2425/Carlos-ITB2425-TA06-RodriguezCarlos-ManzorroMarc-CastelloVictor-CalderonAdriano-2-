@@ -3,47 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web de Predicción Meteorológica</title>
+    <title>Web Minimalista y Visual</title>
     <link rel="stylesheet" href="web.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
+    <!-- Sección principal con recuadro de texto -->
     <section class="hero">
         <div class="hero-content">
             <h1>Proyecto de Predicciones Meteorológicas</h1>
-            <p class="authors">Marc Manzorro, Victor Castelló, Adriano Calderon y Carlos Rodriguez</p>
+            <p>Marc Manzorro, Victor Castelló, Adriano Calderon y Carlos Rodriguez</p>
         </div>
     </section>
 
+    <!-- Sección de gráficos y recuadros -->
     <section class="content-section">
         <div class="graph-container">
             <div class="graph">
-                <h2>Temperaturas (2006-2100)</h2>
-                <canvas id="lineChart"></canvas>
+                <h2>Media Anual de Precipitación (2006-2100)</h2>
+                <canvas id="precipitationChart"></canvas>
             </div>
             <div class="graph">
-                <h2>Precipitaciones (2006-2100)</h2>
-                <canvas id="scatterChart"></canvas>
+                <h2>Variación Anual de Precipitación (2006-2100)</h2>
+                <canvas id="variationChart"></canvas>
             </div>
         </div>
-        <div class="info-container">
+        <div class="boxes-container">
             <div class="box">
                 <h2>Datos Clave</h2>
-                <p>Hemos usado datos de la AEMET </p>
+                <hr>
+                <p>Promedios de Precipitación (basados en la media anual):</p>
+                <p>Promedio años pasados (2006-2024): 333.51 L/m² al año</p>
+                <p>Promedio años futuros (2025-2100): 309.25 L/m² al año</p>
+                <hr>
+                <p>Mayor Incremento y Decremento de Precipitación (basados en la media anual):</p>
+                <p>Mayor incremento: Año 2092 con 149.40 L/m² al año</p>
+                <p>Mayor decremento: Año 2023 con -196.25 L/m² al año</p>
             </div>
             <div class="box">
-                <h2>Impacto</h2>
-                <p>que ahcevFER  wdvwerbg ayudan en la gestión de recursos y prevención de desastres.</p>
+                <h2>Días con más y menos precipitación:</h2>
+                <hr>
+                <p>Día más lluvioso en años pasados (2006-2024): Año 2013 - Mes 11 - Día 19 con 807.0 L/m²</p>
+                <p>Día menos lluvioso en años pasados (2006-2024): Año 2006 - Mes 1 - Día 1 con 0.0 L/m²</p>
+                <hr>
+                <p>Día más lluvioso en años futuros (2025-2100): Año 2073 - Mes 12 - Día 31 con 1343.0 L/m²</p>
+                <p>Día menos lluvioso en años futuros (2025-2100): Año 2025 - Mes 1 - Día 1 con 0.0 L/m²</p>
             </div>
             <div class="box">
                 <h2>Buscador</h2>
-                <p>Aquí tenemos un buscador para cercar con más precision la media de Temperatura y Precipitaciones año por año:</p>
-
-
+                <hr>
+                <p>Buscador de años para poder facilitar la informacion de un año en concreto</p>
+                <!-- Añadimos el buscador aquí -->
                 <div class="search-container">
                     <input type="text" id="yearSearch" list="yearsList" placeholder="Buscar año...">
                     <datalist id="yearsList">
+                        <!-- Opciones de años desde 2006 hasta 2100 -->
                         <script>
                             for (let year = 2006; year <= 2100; year++) {
                                 document.write(`<option value="${year}">${year}</option>`);
@@ -51,27 +64,172 @@
                         </script>
                     </datalist>
                 </div>
-                <div id="result" class="result-container"></div>
+                <!-- Espacio para mostrar los datos del año seleccionado -->
+                <div id="yearData" class="year-data">
+                    <!-- Aquí se mostrarán los datos -->
+                </div>
             </div>
         </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Proyecto de Predicciones Meteorológicas. Todos los derechos reservados.</p>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2023 Proyecto de Predicciones Meteorológicas. Todos los derechos reservados.</p>
+            <p>Contacto: info@meteorologiapredicciones.com</p>
+        </div>
     </footer>
 
+    <!-- Script para los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const years = Array.from({ length: 95 }, (_, i) => 2006 + i);
-        const temperatures = years.map(year => 10 + 0.1 * (year - 2006) + Math.random() * 2);
-        const precipitations = years.map(year => 500 + 5 * (year - 2006) + Math.random() * 50);
+        // Datos de precipitación y variación anual (2006-2100)
+        const precipitationData = [
+            { year: 2006, media: 423.58, variacion: null },
+            { year: 2007, media: 323.06, variacion: -23.73 },
+            { year: 2008, media: 315.68, variacion: -2.28 },
+            { year: 2009, media: 321.98, variacion: 2.00 },
+            { year: 2010, media: 251.97, variacion: -21.74 },
+            { year: 2011, media: 303.27, variacion: 20.36 },
+            { year: 2012, media: 306.89, variacion: 1.19 },
+            { year: 2013, media: 367.55, variacion: 19.76 },
+            { year: 2014, media: 354.74, variacion: -3.48 },
+            { year: 2015, media: 315.03, variacion: -11.20 },
+            { year: 2016, media: 385.31, variacion: 22.31 },
+            { year: 2017, media: 310.02, variacion: -19.54 },
+            { year: 2018, media: 353.54, variacion: 14.04 },
+            { year: 2019, media: 365.64, variacion: 3.42 },
+            { year: 2020, media: 347.65, variacion: -4.92 },
+            { year: 2021, media: 308.50, variacion: -11.26 },
+            { year: 2022, media: 443.37, variacion: 43.72 },
+            { year: 2023, media: 247.12, variacion: -44.26 },
+            { year: 2024, media: 291.76, variacion: 18.06 },
+            { year: 2025, media: 294.44, variacion: 0.92 },
+            { year: 2026, media: 339.16, variacion: 15.19 },
+            { year: 2027, media: 435.30, variacion: 28.35 },
+            { year: 2028, media: 275.74, variacion: -36.65 },
+            { year: 2029, media: 293.22, variacion: 6.34 },
+            { year: 2030, media: 388.24, variacion: 32.41 },
+            { year: 2031, media: 384.48, variacion: -0.97 },
+            { year: 2032, media: 397.76, variacion: 3.46 },
+            { year: 2033, media: 368.07, variacion: -7.47 },
+            { year: 2034, media: 289.91, variacion: -21.23 },
+            { year: 2035, media: 295.61, variacion: 1.97 },
+            { year: 2036, media: 340.38, variacion: 15.14 },
+            { year: 2037, media: 335.17, variacion: -1.53 },
+            { year: 2038, media: 302.33, variacion: -9.80 },
+            { year: 2039, media: 409.06, variacion: 35.30 },
+            { year: 2040, media: 337.57, variacion: -17.48 },
+            { year: 2041, media: 254.89, variacion: -24.49 },
+            { year: 2042, media: 314.25, variacion: 23.29 },
+            { year: 2043, media: 346.50, variacion: 10.26 },
+            { year: 2044, media: 295.07, variacion: -14.84 },
+            { year: 2045, media: 303.48, variacion: 2.85 },
+            { year: 2046, media: 331.18, variacion: 9.13 },
+            { year: 2047, media: 329.40, variacion: -0.54 },
+            { year: 2048, media: 312.56, variacion: -5.11 },
+            { year: 2049, media: 351.69, variacion: 12.52 },
+            { year: 2050, media: 318.28, variacion: -9.50 },
+            { year: 2051, media: 293.31, variacion: -7.85 },
+            { year: 2052, media: 260.56, variacion: -11.16 },
+            { year: 2053, media: 325.03, variacion: 24.74 },
+            { year: 2054, media: 392.28, variacion: 20.69 },
+            { year: 2055, media: 299.46, variacion: -23.66 },
+            { year: 2056, media: 397.26, variacion: 32.66 },
+            { year: 2057, media: 364.69, variacion: -8.20 },
+            { year: 2058, media: 285.58, variacion: -21.69 },
+            { year: 2059, media: 251.67, variacion: -11.87 },
+            { year: 2060, media: 260.50, variacion: 3.51 },
+            { year: 2061, media: 274.79, variacion: 5.48 },
+            { year: 2062, media: 285.30, variacion: 3.82 },
+            { year: 2063, media: 317.39, variacion: 11.25 },
+            { year: 2064, media: 266.06, variacion: -16.17 },
+            { year: 2065, media: 292.94, variacion: 10.10 },
+            { year: 2066, media: 312.38, variacion: 6.64 },
+            { year: 2067, media: 377.56, variacion: 20.86 },
+            { year: 2068, media: 290.90, variacion: -22.95 },
+            { year: 2069, media: 266.27, variacion: -8.47 },
+            { year: 2070, media: 339.11, variacion: 27.36 },
+            { year: 2071, media: 383.37, variacion: 13.05 },
+            { year: 2072, media: 258.88, variacion: -32.47 },
+            { year: 2073, media: 290.56, variacion: 12.24 },
+            { year: 2074, media: 310.95, variacion: 7.02 },
+            { year: 2075, media: 303.66, variacion: -2.34 },
+            { year: 2076, media: 209.92, variacion: -30.87 },
+            { year: 2077, media: 294.69, variacion: 40.38 },
+            { year: 2078, media: 349.35, variacion: 18.55 },
+            { year: 2079, media: 190.00, variacion: -45.61 },
+            { year: 2080, media: 318.93, variacion: 67.86 },
+            { year: 2081, media: 413.83, variacion: 29.75 },
+            { year: 2082, media: 262.58, variacion: -36.55 },
+            { year: 2083, media: 393.28, variacion: 49.77 },
+            { year: 2084, media: 273.53, variacion: -30.45 },
+            { year: 2085, media: 306.08, variacion: 11.90 },
+            { year: 2086, media: 245.44, variacion: -19.81 },
+            { year: 2087, media: 231.85, variacion: -5.54 },
+            { year: 2088, media: 243.25, variacion: 4.92 },
+            { year: 2089, media: 325.50, variacion: 33.81 },
+            { year: 2090, media: 311.39, variacion: -4.34 },
+            { year: 2091, media: 261.77, variacion: -15.93 },
+            { year: 2092, media: 411.17, variacion: 57.07 },
+            { year: 2093, media: 272.37, variacion: -33.76 },
+            { year: 2094, media: 270.47, variacion: -0.70 },
+            { year: 2095, media: 287.14, variacion: 6.16 },
+            { year: 2096, media: 203.92, variacion: -28.98 },
+            { year: 2097, media: 205.68, variacion: 0.86 },
+            { year: 2098, media: 239.43, variacion: 16.41 },
+            { year: 2099, media: 322.58, variacion: 34.73 },
+            { year: 2100, media: 314.36, variacion: -2.55 }
+        ];
 
-        // Gráfico de temperaturas
-        new Chart(document.getElementById('lineChart').getContext('2d'), {
+        // Extraer años, medias y variaciones
+        const years = precipitationData.map(data => data.year);
+        const medias = precipitationData.map(data => data.media);
+        const variaciones = precipitationData.map(data => data.variacion);
+
+        // Gráfico de líneas (Media de Precipitación)
+        const precipitationCtx = document.getElementById('precipitationChart').getContext('2d');
+        const precipitationChart = new Chart(precipitationCtx, {
             type: 'line',
             data: {
                 labels: years,
                 datasets: [{
-                    label: 'Temperatura Media (°C)',
-                    data: temperatures,
+                    label: 'Media Anual de Precipitación (L/m²)',
+                    data: medias,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Precipitación (L/m²)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Año'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de líneas (Variación de Precipitación)
+        const variationCtx = document.getElementById('variationChart').getContext('2d');
+        const variationChart = new Chart(variationCtx, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Variación Anual de Precipitación (%)',
+                    data: variaciones,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderWidth: 2,
@@ -80,48 +238,41 @@
             },
             options: {
                 scales: {
-                    y: { title: { display: true, text: 'Temperatura (°C)' } },
-                    x: { title: { display: true, text: 'Año' } }
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Variación (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Año'
+                        }
+                    }
                 }
             }
         });
 
-        // Gráfico de precipitaciones
-        new Chart(document.getElementById('scatterChart').getContext('2d'), {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Precipitación Media (mm)',
-                    data: years.map((year, i) => ({ x: year, y: precipitations[i] })),
-                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: { title: { display: true, text: 'Precipitación (mm)' } },
-                    x: { title: { display: true, text: 'Año' } }
-                }
-            }
-        });
-
+        // Función para buscar el año seleccionado
         document.getElementById('yearSearch').addEventListener('input', function () {
             const selectedYear = parseInt(this.value);
-            if (!isNaN(selectedYear) && years.includes(selectedYear)) {
-                const index = years.indexOf(selectedYear);
-                const temp = temperatures[index].toFixed(2);
-                const precip = precipitations[index].toFixed(2);
+            const selectedData = precipitationData.find(data => data.year === selectedYear);
+            const yearDataContainer = document.getElementById('yearData');
 
-                document.getElementById('result').innerHTML = `
-                    <p><strong>Temperatura en ${selectedYear}:</strong> ${temp}°C</p>
-                    <p><strong>Precipitación en ${selectedYear}:</strong> ${precip} mm</p>
+            if (selectedData) {
+                // Mostrar los datos en el recuadro
+                yearDataContainer.innerHTML = `
+                    <p>Año seleccionado: <span>${selectedYear}</span></p>
+                    <p>Media de Precipitación: <span>${selectedData.media} L/m²</span></p>
+                    <p>Variación: <span>${selectedData.variacion}%</span></p>
                 `;
             } else {
-                document.getElementById('result').innerHTML = '';
+                // Limpiar el recuadro si no se encuentra el año
+                yearDataContainer.innerHTML = '';
             }
         });
     </script>
-
 </body>
 </html>

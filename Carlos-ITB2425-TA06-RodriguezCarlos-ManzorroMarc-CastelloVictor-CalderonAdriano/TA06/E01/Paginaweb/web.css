@@ -2,31 +2,38 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #a35353;
     color: #333;
+    line-height: 1.6;
 }
 
-/* Hero Section */
+/* Sección principal (hero) */
 .hero {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 50vh; /* Reducimos la altura */
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #fff;
     text-align: center;
 }
 
-.hero h1 {
-    font-size: 3.5rem;
+.hero-content {
+    max-width: 800px;
+    padding: 20px;
 }
 
-.authors {
-    font-size: 1.8rem;
+.hero h1 {
+    font-size: 2.5rem; /* Reducimos el tamaño del título */
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem; /* Reducimos el tamaño del texto */
     opacity: 0.9;
 }
 
-/* Sección de contenido */
+/* Sección de gráficos y recuadros */
 .content-section {
     display: flex;
     justify-content: space-between;
@@ -34,37 +41,60 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Contenedores */
 .graph-container {
     width: 45%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
 }
 
-/* Ajuste de altura para los recuadros con separación */
-.info-container {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 20px; /* Espacio entre los recuadros */
-}
-
-/* Gráficos y recuadros con mayor altura */
-.graph, .box {
+.graph {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Aumentar la altura de los recuadros */
-.box {
-    height: 32%; /* Ajuste para que sean más grandes y con separación */
+.graph h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-/* Estilos del buscador */
+.boxes-container {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.box {
+    background-color: #e4e4e4;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.box p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.box hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 10px 0;
+}
+
+/* Estilos para el buscador */
 .search-container {
     margin-top: 20px;
 }
@@ -78,23 +108,64 @@ body {
     outline: none;
 }
 
-/* Resultados */
-.result-container {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    background: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
+#yearSearch:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
 }
 
-/* Pie de página */
-footer {
+datalist {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+datalist option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+datalist option:hover {
+    background-color: #f4f4f4;
+}
+
+/* Estilos para el espacio de datos del año seleccionado */
+.year-data {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    color: #333;
+}
+
+.year-data p {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.year-data p span {
+    font-weight: normal;
+    color: #666;
+}
+
+/* Estilos para el pie de página */
+.footer {
+    background-color: #333;
+    color: #fff;
     text-align: center;
-    padding: 20px;
-    background: #333;
-    color: white;
-    margin-top: 40px;
+    padding: 20px 0;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer p {
+    margin: 5px 0;
+    font-size: 0.9rem;
 }
