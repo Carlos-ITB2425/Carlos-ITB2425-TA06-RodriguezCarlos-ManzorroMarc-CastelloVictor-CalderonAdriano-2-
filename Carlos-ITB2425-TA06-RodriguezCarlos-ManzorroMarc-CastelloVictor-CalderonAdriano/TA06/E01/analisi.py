@@ -52,6 +52,26 @@ def procesar_archivo(directorio, archivo, log_errores, log_valores):
     return datos
 
 
+def generar_graficos(df, timestamp):
+    # Agrupar la precipitación anual
+    precipitacion_anual = df.groupby('Año')['Precipitación'].sum()
+
+    # Gráfico de precipitación total anual (barras)
+    grafico_precipitacion = precipitacion_anual.plot(kind='bar', title='Precipitación total anual',
+                                                     ylabel='Precipitación', xlabel='Año', color='skyblue', grid=True)
+    fig = grafico_precipitacion.get_figure()
+    fig.savefig(f"grafico_precipitacion_anual_{timestamp}.png")
+    fig.clf()  # Limpia la figura para evitar superposición
+
+    # Gráfico de cambio anual porcentual de la precipitación
+    cambio_anual = precipitacion_anual.pct_change().fillna(0) * 100
+    grafico_cambio = cambio_anual.plot(kind='line', title='Cambio porcentual anual de precipitaciones',
+                                       ylabel='Cambio (%)', xlabel='Año', marker='o', color='orange', grid=True)
+    fig2 = grafico_cambio.get_figure()
+    fig2.savefig(f"grafico_cambio_anual_{timestamp}.png")
+    fig2.clf()
+
+
 def analizar_archivos(directorio):
     print("Ejecución iniciada...")
     log_errores, log_valores, log_final, timestamp = inicializar_logs()
@@ -86,10 +106,13 @@ def analizar_archivos(directorio):
     log_final.write("\n\nTasa de variación anual de precipitaciones (%):\n")
     log_final.write(cambio_anual.to_string())
 
+    # Generar los gráficos
+    generar_graficos(df, timestamp)
+
     log_errores.close()
     log_valores.close()
     log_final.close()
-    print("¡Ejecución finalizada!")
+    print("¡Ejecución finalizada! Gráficos generados.")
 
 
 # Ejecutar el análisis para el directorio especificado
